@@ -1,0 +1,31 @@
+version: "3.9"
+
+volumes:
+  azurite_practice_next_node_modules:
+
+services:
+  front:
+    container_name: azurite_practice_next
+    build:
+      context: .
+      dockerfile: ./docker/next-app/Dockerfile
+    volumes:
+      - ./next-app:/app
+      - azurite_practice_next_node_modules:/app/node_modules
+    tty: true
+    restart: always
+    environment:
+      - TZ=Asia/Tokyo
+    ports:
+      - 22200:3000
+    command: sh -c "npm install && npm run dev"
+
+  storage:
+    container_name: azurite_practice_storage
+    build:
+      context: .
+      dockerfile: ./docker/storage/Dockerfile
+    ports:
+      - 22201:10000
+      - 22202:10001
+      - 22203:10002
