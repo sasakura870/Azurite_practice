@@ -26,6 +26,4 @@ services:
       context: .
       dockerfile: ./docker/storage/Dockerfile
     ports:
-      - 22201:10000
-      - 22202:10001
-      - 22203:10002
+      - 10000:10000
