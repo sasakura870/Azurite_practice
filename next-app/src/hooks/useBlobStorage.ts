@@ -29,5 +29,12 @@ export const useBlobStorage = async () => {
     return container;
   }
 
-  return [name, {createContainer}] as const;
+  const createBlob = async (containerName: string , name: string, content: ArrayBuffer) => {
+    const containerClient = blobServiceClient.getContainerClient(containerName);
+    const blockBlobClient = containerClient.getBlockBlobClient(name);
+    const blob = await blockBlobClient.uploadData(content);
+    return blob;
+  }
+
+  return [name, {createContainer, createBlob}] as const;
 }
